@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  camp_id: 1
+  student_id: 1
+  payment_status: MyString
+  points_earned: 1
+
+two:
+  camp_id: 1
+  student_id: 1
+  payment_status: MyString
+  points_earned: 1

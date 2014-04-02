@@ -1,4 +1,14 @@
 ChessCamp::Application.routes.draw do
+  resources :users
+
+  resources :students
+
+  resources :registrations
+
+  resources :locations
+
+  resources :families
+
   # generated routes
   resources :curriculums
   resources :instructors
