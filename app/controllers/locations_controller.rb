@@ -54,11 +54,17 @@ class LocationsController < ApplicationController
   # DELETE /locations/1
   # DELETE /locations/1.json
   def destroy
-    @location.destroy
-    respond_to do |format|
-      format.html { redirect_to locations_url }
-      format.json { head :no_content }
-    end
+    if @location.used_by_a_camp
+      @location.destroy
+      respond_to do |format|
+        format.html { redirect_to locations_url }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to locations_url, notice: "Location used by camp, cannot be deleted" }
+        format.json { head :no_content }
+      end
   end
 
   private
