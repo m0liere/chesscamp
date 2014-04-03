@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140205234231) do
+ActiveRecord::Schema.define(version: 20140403001017) do
 
   create_table "camp_instructors", force: true do |t|
     t.integer  "camp_id"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20140205234231) do
     t.boolean  "active",        default: true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "location_id"
   end
 
   create_table "curriculums", force: true do |t|
@@ -42,6 +43,16 @@ ActiveRecord::Schema.define(version: 20140205234231) do
     t.datetime "updated_at"
   end
 
+  create_table "families", force: true do |t|
+    t.string   "family_name"
+    t.string   "parent_first_name"
+    t.string   "email"
+    t.string   "phone"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "instructors", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -49,6 +60,51 @@ ActiveRecord::Schema.define(version: 20140205234231) do
     t.string   "email"
     t.string   "phone"
     t.boolean  "active",     default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "locations", force: true do |t|
+    t.string   "name"
+    t.string   "street_1"
+    t.string   "street_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.integer  "max_capacity"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "registrations", force: true do |t|
+    t.integer  "camp_id"
+    t.integer  "student_id"
+    t.string   "payment_status"
+    t.integer  "points_earned"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "students", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.integer  "family_id"
+    t.date     "date_of_birth"
+    t.integer  "rating"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: true do |t|
+    t.integer  "instructor_id"
+    t.string   "username"
+    t.string   "password_digest"
+    t.string   "role"
+    t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
