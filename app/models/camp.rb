@@ -1,6 +1,7 @@
 class Camp < ActiveRecord::Base
   # relationships
   belongs_to :curriculum
+  belongs_to :location
   has_many :camp_instructors
   has_many :instructors, through: :camp_instructors
 
