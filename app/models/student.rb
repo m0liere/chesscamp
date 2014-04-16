@@ -17,9 +17,9 @@ class Student < ActiveRecord::Base
 	validates_numericality_of(:family_id)
 
 	#scopes
-	scope :alphabetical, -> order('last_name, first_name')
-	scope :active, -> where(active: true)
-	scope :inactive, -> where(active: false)
+	scope :alphabetical, -> {order('last_name, first_name')}
+	scope :active, -> {where(active: true)}
+	scope :inactive, -> {where(active: false)}
 	#all students below given rating lvl
 	scope :below_rating, -> (rating) {where('rating < ?', rating)}
 	scope :at_or_above_rating, -> (rating) {where('rating >= ?',rating)}
