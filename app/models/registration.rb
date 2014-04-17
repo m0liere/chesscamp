@@ -12,6 +12,18 @@ class Registration < ActiveRecord::Base
 	validates :payment_status, inclusion: {in: ['full', 'deposit']}
 	validates :points_earned, numericality:{greater_than_or_equal_to: 0, only_integer: true}
 
+	validates :can_register_for_camp
+
+	#scopes
+	#---------------------------------------------
+	scope :deposit_only, -> {where('payment_status = ?', 'deposit')}
+	scope :paid, -> {where('payment_status = ?', 'full')} 
+
+
+	#function making sure students camp selection is good for their rating
+	def can_register_for_camp
+		return self.camp.camp_ratings_range.indclude?(self.student.rating)
+	end
 
 
 end

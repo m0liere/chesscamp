@@ -27,4 +27,5 @@ class Curriculum < ActiveRecord::Base
     return true
   end
 
+
 end

@@ -51,5 +51,10 @@ class Camp < ActiveRecord::Base
     end
   end
 
+    #helper function to make sure students register for camp with curriculum that suits their rating
+  def camp_ratings_range
+    ((self.curriculum.min_rating)..(self.curriculum.max_rating)).to_a
+  end
+
 
 end
