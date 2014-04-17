@@ -8,5 +8,9 @@ class Registration < ActiveRecord::Base
 	validates_presence_of(:student_id)
 	validates_presence_of(:payment_status)
 
+	validates :payment_status, inclusion: {in: ['full', 'deposit']}
+	validates :points_earned, numericality:{greater_than_or_equal_to: 0, only_integer: true}
+	
+
 
 end
