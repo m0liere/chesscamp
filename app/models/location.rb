@@ -12,10 +12,9 @@ class Location < ActiveRecord::Base
 	validates_presence_of(:max_capacity)
 
 	#numericality validations
-	validates_numericality_of(:max_capacity)
 	validates_numericality_of(:latitude)
 	validates_numericality_of(:longitude)
-
+	validates_numericality_of(:max_capacity)
 	validates :name, uniqueness: {case_sensitive: false}
 
 	#format validations
