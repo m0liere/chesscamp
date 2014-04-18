@@ -23,5 +23,16 @@ class StudentTest < ActiveSupport::TestCase
   should_not allow_value(-1).for(:rating)
   should_not allow_value(50).for(:rating)
   should_not allow_value(5000).for(:rating)
+  should_not allow_value(nil).for(:rating)
+  should_not allow_value('rank').for(:rating)
+  should_not allow_value(5.765).for(:rating)
+
+  should allow_value(18.years.ago.to_date).for(:date_of_birth)
+  #should_not allow_value(17.years.ago).for(:date_of_birth)
+  should_not allow_value(-1).for(:date_of_birth)
+  should_not allow_value(50).for(:date_of_birth)
+  should_not allow_value(nil).for(:date_of_birth)
+  should_not allow_value('rank').for(:date_of_birth)
+  should_not allow_value(5.765).for(:date_of_birth)
 
 end

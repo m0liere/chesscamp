@@ -35,7 +35,7 @@ class Student < ActiveRecord::Base
 	#callbacks
 	#-------------------------------------------------------------------------------
 	before_destroy :is_destroyable?
-	validate :belongs_to_active_family? on: :create
+	#validate :belongs_to_active_family? on: :create
 	before_save :set_unrated
 
 
@@ -65,7 +65,7 @@ class Student < ActiveRecord::Base
 
 	#function to check student belongs to an active family in the system
 	def belongs_to_active_family?
-		active_families = Family.active.map{&:id}
+		active_families = Family.active.map{|i| i.id}
 		unless active_families.include?(self.family_id)
 			errors.add(:base, "student must belong to an active family in the system")
 			return false

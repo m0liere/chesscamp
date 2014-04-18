@@ -32,4 +32,9 @@ FactoryGirl.define do
     association :instructor
   end
   
+  factory :student do
+    association: :family
+    first_name "Eric"
+    last_name "Cartman"
+  end
 end
