@@ -16,7 +16,7 @@ class Student < ActiveRecord::Base
 	validates :rating, numericality: {only_integer: true}, inclusion: {in: ratings_array}, presence: true
 
 	validates_date :date_of_birth
-	validates_numericality_of(:family_id)
+	#validates_numericality_of(:family_id)
 
 	#scopes	
 	#-------------------------------------------------------------------------------

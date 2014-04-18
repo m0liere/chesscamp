@@ -1,7 +1,7 @@
 class Family < ActiveRecord::Base
 	#relationship
 	has_many(:students)
-	has_many(:registrations), through: :students
+	has_many :registrations, through: :students
 
 	#validations
 	validates_format_of :phone, :with => /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/, :message => "should be 10 digits (area code needed) and delimited with dashes only"

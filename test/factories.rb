@@ -33,8 +33,18 @@ FactoryGirl.define do
   end
   
   factory :student do
-    association: :family
+    association :family
     first_name "Eric"
     last_name "Cartman"
+    active true
+    rating 101
+    date_of_birth 9.years.ago.to_date
+  end
+
+  factory :family do
+    family_name 'Cartman'
+    phone { rand(10 ** 10).to_s.rjust(10,'0') }
+    email { |a| "#{a.family_name}@example.com".downcase }
+
   end
 end

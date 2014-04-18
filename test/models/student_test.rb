@@ -35,4 +35,19 @@ class StudentTest < ActiveSupport::TestCase
   should_not allow_value('rank').for(:date_of_birth)
   should_not allow_value(5.765).for(:date_of_birth)
 
+  context "create 4 students" do
+  	setup do
+  		create_students
+  	end
+
+  	# teardown do
+  	# 	delete_students
+  	# end
+
+  	should "show that there are 3 active students" do
+  		assert_equal 3, Student.active.size
+  		assert_equal ['Eric', 'Kyle', 'Stan'], Student.active.map{|i| i.first_name}.sort
+  	end 
+  end 
+
 end
