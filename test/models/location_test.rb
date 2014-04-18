@@ -23,8 +23,11 @@ class LocationTest < ActiveSupport::TestCase
   should_not allow_value("3431").for(:zip)
   should_not allow_value("15213-9843").for(:zip)
   should_not allow_value("15d32").for(:zip)
+  should_not allow_value(nil).for(:zip)
 
   #test
   should validate_numericality_of(:max_capacity)
+  should validate_numericality_of(:latitude)
+  should validate_numericality_of(:longitude)
 
 end

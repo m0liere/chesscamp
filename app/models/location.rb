@@ -1,6 +1,7 @@
 class Location < ActiveRecord::Base
 	#callback
 	before_destroy :used_by_a_camp
+	before_save :find_loc_coordinates
 
 	#relationships
 	has_many :camps
@@ -28,6 +29,19 @@ class Location < ActiveRecord::Base
 		'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 
 		'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY']
 	validates :state, length: {is: 2}, inclusion: {in: us_state_abbrevs}
+
+
+	#geocoder
+	def find_loc_coordinates
+    	coord = Geocoder.coordinates("#{name}, #{street_1}, #{state}, #{zip}")
+    	if coord
+      		self.latitude = coord[0]
+      		self.longitude = coord[1]
+    	else 
+      		errors.add(:base, "Error with geocoding")
+    	end
+    	coord
+  	end
 
 
 

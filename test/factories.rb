@@ -45,6 +45,6 @@ FactoryGirl.define do
     family_name 'Cartman'
     phone { rand(10 ** 10).to_s.rjust(10,'0') }
     email { |a| "#{a.family_name}@example.com".downcase }
-
+    active true
   end
 end

@@ -38,10 +38,12 @@ class StudentTest < ActiveSupport::TestCase
   context "create 4 students" do
   	setup do
   		create_students
+  		create_families
   	end
 
   	teardown do
   		delete_students
+  		delete_families
   	end
 
   	should "show that there are 3 active students" do
@@ -78,6 +80,17 @@ class StudentTest < ActiveSupport::TestCase
 
   	should "show correct age for a given student" do
   		assert_equal 9, @eric.age
+  	end
+
+  	should "not allow student to be created if not part of an active family" do
+  		@pirrip = FactoryGirl.create(:family, family_name: 'Pirrip', active: false)
+  		@pip = FactoryGirl.build(:student, family: @pirrip, first_name: 'Philip', last_name: 'Pirrip')
+  		deny @pip.valid?
+  		@pirrip.destroy
+  	end 
+
+  	should "set unrated players to 0 before saving to database" do
+
   	end
 
   end 
