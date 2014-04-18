@@ -36,7 +36,7 @@ class Student < ActiveRecord::Base
 	#-------------------------------------------------------------------------------
 	before_destroy :is_destroyable?
 	validate :belongs_to_active_family? on: :create
-
+	before_save :set_unrated
 
 
 
@@ -60,7 +60,7 @@ class Student < ActiveRecord::Base
   	end
 
 	def age
-
+		(Date.today - (:date_of_birth.to_date)).to_i/365
 	end
 
 	#function to check student belongs to an active family in the system
