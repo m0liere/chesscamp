@@ -35,14 +35,14 @@ class Student < ActiveRecord::Base
 	#callbacks
 	#-------------------------------------------------------------------------------
 	before_destroy :is_destroyable?
-	#validate :belongs_to_active_family? on: :create
+	#validate :belongs_to_active_family?, on: :create
 	before_save :set_unrated
 
 
 
 	#additonal functions
 	#-------------------------------------------------------------------------------
-	private 
+	#private 
 	#function to run before the save in the data base to set unrated players to 0
 	def set_unrated
 		if(self.rating.nil?)
@@ -60,7 +60,7 @@ class Student < ActiveRecord::Base
   	end
 
 	def age
-		(Date.today - (:date_of_birth.to_date)).to_i/365
+		(Date.today- date_of_birth).to_i/365
 	end
 
 	#function to check student belongs to an active family in the system

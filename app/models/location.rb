@@ -1,6 +1,6 @@
 class Location < ActiveRecord::Base
 	#callback
-		before_destroy :used_by_a_camp
+	before_destroy :used_by_a_camp
 
 	#relationships
 	has_many :camps

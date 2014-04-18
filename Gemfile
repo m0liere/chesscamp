@@ -44,6 +44,7 @@ gem 'simple_form'
 # Use foundation for base CSS
 gem 'foundation-rails'
 
+gem "geocoder"
 # Additional gems that are very useful in Rails development
 group :development do
   gem 'quiet_assets'

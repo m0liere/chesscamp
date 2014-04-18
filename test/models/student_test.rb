@@ -40,14 +40,46 @@ class StudentTest < ActiveSupport::TestCase
   		create_students
   	end
 
-  	# teardown do
-  	# 	delete_students
-  	# end
+  	teardown do
+  		delete_students
+  	end
 
   	should "show that there are 3 active students" do
   		assert_equal 3, Student.active.size
   		assert_equal ['Eric', 'Kyle', 'Stan'], Student.active.map{|i| i.first_name}.sort
   	end 
+
+  	should "show that there is 1 inactive student" do
+  		assert_equal 1, Student.inactive.size
+  		assert_equal ['Kenny'], Student.inactive.map{|i| i.first_name}.sort
+  	end 
+
+	should "show all students in alphabetical order" do
+  		assert_equal ['Kyle', 'Eric', 'Stan', 'Kenny'], Student.alphabetical.map{|i| i.first_name}
+  	end 
+
+  	should "show that there are 2 students with ratings below 200" do
+  		assert_equal 2, Student.below_rating(200).size
+  		assert_equal ['Eric', 'Kenny'], Student.below_rating(200).map{|i| i.first_name}.sort
+  	end	
+
+  	should "show that there are 2 students with ratings at or above 1000" do
+  		assert_equal 2, Student.at_or_above_rating(1000).size
+  		assert_equal ['Kyle', 'Stan'], Student.at_or_above_rating(1000).map{|i| i.first_name}.sort
+  	end
+
+  	should "show correct name for given student" do
+  		assert_equal 'Cartman, Eric', @eric.name
+  	end
+
+  	should "show correct proper name for given student" do
+  		assert_equal 'Eric Cartman', @eric.proper_name
+  	end
+
+  	should "show correct age for a given student" do
+  		assert_equal 9, @eric.age
+  	end
+
   end 
 
 end

@@ -1,7 +1,7 @@
 class Registration < ActiveRecord::Base
 	#relationships
-	belongs_to(:camp)
-	belongs_to(:student)
+	belongs_to :camp
+	belongs_to :student
 	has_one :family, through: :student
 
 	#validations

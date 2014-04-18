@@ -4,6 +4,7 @@ class Camp < ActiveRecord::Base
   belongs_to :location
   has_many :camp_instructors
   has_many :instructors, through: :camp_instructors
+  has_many :registrations
 
   # validations
   validates_presence_of :curriculum_id, :time_slot, :start_date
