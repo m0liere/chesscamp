@@ -96,5 +96,16 @@ class InstructorTest < ActiveSupport::TestCase
     should "correctly assess whether an instructor can be deleted" do
       deny @mark.destroy
     end
+
+    should "change user to inactive if instructor becomes inactive" do
+      @noah = FactoryGirl.create(:instructor, first_name: "Noah", last_name: "Levin", bio: "A stupendous chess player as you have ever seen.")
+      @bad = FactoryGirl.create(:user, instructor: @noah, username: "fml")
+      @noah.user = @bad
+      @noah.update(active: false)
+      @noah.reload
+      assert_equal ["fml"], User.inactive.map { |i| i.username }
+      @noah.delete
+      @bad.delete
+    end 
   end
 end

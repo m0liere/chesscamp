@@ -29,7 +29,7 @@ class Instructor < ActiveRecord::Base
 
   # instance methods
   before_save :reformat_phone
-
+  before_save :active_instructor
   before_destroy :is_destroyable?
 
   def name
@@ -42,6 +42,15 @@ class Instructor < ActiveRecord::Base
 
   def is_destroyable?
     false
+  end
+
+  def active_instructor
+    if(self.user != nil)
+      if self.active == false
+        self.user.active = false 
+        self.user.save!
+      end
+    end
   end
 
   private

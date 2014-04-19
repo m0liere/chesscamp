@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140403002243) do
+ActiveRecord::Schema.define(version: 20140419223600) do
 
   create_table "camp_instructors", force: true do |t|
     t.integer  "camp_id"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 20140403002243) do
     t.boolean  "active",     default: true
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "picture"
+    t.string   "photo"
   end
 
   create_table "locations", force: true do |t|
