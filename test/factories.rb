@@ -57,4 +57,12 @@ FactoryGirl.define do
     max_capacity 50
     active true
   end 
+
+  factory :user do
+    association :instructor
+    username 'agentborini'
+    password_digest 'chelseasucks'
+    role 'instructor'
+    active true
+  end
 end
