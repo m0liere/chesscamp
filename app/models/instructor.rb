@@ -1,7 +1,11 @@
 class Instructor < ActiveRecord::Base
+
+  mount_uploader :photo, PhotoUploader
+
   # relationships
   has_many :camp_instructors
   has_many :camps, through: :camp_instructors
+  has_one :user
 
   # validations
   validates_presence_of :first_name, :last_name, :phone

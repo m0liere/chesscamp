@@ -45,6 +45,7 @@ gem 'simple_form'
 gem 'foundation-rails'
 
 gem "geocoder"
+gem "carrierwave"
 # Additional gems that are very useful in Rails development
 group :development do
   gem 'quiet_assets'

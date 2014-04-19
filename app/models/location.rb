@@ -17,7 +17,7 @@ class Location < ActiveRecord::Base
 	validates :name, uniqueness: {case_sensitive: false}
 
 	#format validations
-	validates_format_of :zip, with: /\A\d{5}\z/, message: "should be five digits long", allow_blank: true
+	validates_format_of :zip, with: /\A\d{5}\z/, message: "should be five digits long"
 
 
 	us_state_abbrevs = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', '

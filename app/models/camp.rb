@@ -5,6 +5,8 @@ class Camp < ActiveRecord::Base
 
   before_destroy :no_students_registered_destroy
   before_save :no_students_registered_invalid, :if => :active_changed?
+  before_save :max_students_valid_for_loc
+
 
 
   # relationships
@@ -26,6 +28,8 @@ class Camp < ActiveRecord::Base
   validate :camp_is_not_a_duplicate, on: :create
   validate :active_loc, on: :create
   validate :max_students_valid_for_loc
+  validate :no_duplicates
+
 
   # scopes
   scope :alphabetical, -> { joins(:curriculum).order('name') }
@@ -70,7 +74,7 @@ class Camp < ActiveRecord::Base
 
 
   def termination1 
-    if (self.active = false)
+    if (self.active == false)
       cis = CampInstructor.where('camp_id = ?', self.id)
       cis.each do |i|
         i.destroy
@@ -95,11 +99,10 @@ class Camp < ActiveRecord::Base
 
   #making sure students and camp dont exceed locations max capacity
   def max_students_valid_for_loc
-    if(self.max_students != nil)
-      unless self.location.max_capacity < self.max_students
-        return true
+    if(self.location != nil && self.max_students != nil)
+      if self.location.max_capacity < self.max_students
+        errors.add(:camp, "max students cannot exceed max capacity of a location")
       end
-      return false
     end
   end
 

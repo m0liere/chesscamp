@@ -54,7 +54,7 @@ FactoryGirl.define do
     street_1 '240 Clent'
     state 'NY'
     zip '11021'
-    max_capacity 5
+    max_capacity 50
     active true
   end 
 end

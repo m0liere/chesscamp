@@ -53,12 +53,14 @@ class CampTest < ActiveSupport::TestCase
       create_curriculums
       create_locs
       create_camps
+      create_instructors
     end
     
     teardown do
       delete_curriculums
       delete_locs
       delete_camps
+      delete_instructors
     end
 
     should "verify there is a camp name method" do
@@ -131,6 +133,35 @@ class CampTest < ActiveSupport::TestCase
 
     should "have a for_curriculum scope" do
       assert_equal ["Endgame Principles"], Camp.for_curriculum(@endgames.id).all.map(&:name).sort
+    end
+
+    #test to cover my helper function
+    should "show a correct range for a given camps curriculum" do
+      assert_equal @camp1.camp_ratings_range, (400..850).to_a
+    end
+
+    should "delete all camp_instructors for those camps that are deleted" do 
+      @rankalank = FactoryGirl.create(:camp, curriculum: @endgames, location: @fairfax, start_date: Date.new(2017,7,21), end_date: Date.new(2017,7,26), time_slot: "pm")
+      @m = FactoryGirl.create(:camp_instructor, camp: @rankalank, instructor: @mark)
+      @rankalank.destroy
+      deny CampInstructor.all.include?(@m)
+    end
+
+    should "not allow max_students of a camp to exceed max capacity of its location" do
+      @jesus = FactoryGirl.build(:camp, max_students: 51, curriculum: @endgames, location: @skid, start_date: Date.new(2019,7,21), end_date: Date.new(2019,7,26), time_slot: "am")
+      deny @jesus.valid?
+    end
+
+    should "delete all camp_instructors for those camps that are inactive" do 
+      @bad_camp = FactoryGirl.create(:camp, curriculum: @endgames, location: @fairfax, start_date: Date.new(2017,7,21), end_date: Date.new(2017,7,26), time_slot: "pm")
+      @m = FactoryGirl.create(:camp_instructor, camp: @bad_camp, instructor: @mark)
+      @bad_camp.update_attribute(:active, false)
+      deny CampInstructor.all.include?(@m)
+    end
+
+    should "not allow camp with same start_date, time_slot, location" do
+      @notgood = FactoryGirl.build(:camp, curriculum: @endgames, location: @home, start_date: Date.new(2014,7,21), end_date: Date.new(2014,7,26), time_slot: "pm")
+      deny @notgood.valid?
     end
   end
 end
