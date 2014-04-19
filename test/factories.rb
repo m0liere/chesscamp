@@ -25,6 +25,7 @@ FactoryGirl.define do
     max_students 8
     active true
     association :curriculum
+    association :location
   end
   
   factory :camp_instructor do 
@@ -47,4 +48,13 @@ FactoryGirl.define do
     email { |a| "#{a.family_name}@example.com".downcase }
     active true
   end
+
+  factory :location do
+    name 'Home'
+    street_1 '240 Clent'
+    state 'NY'
+    zip '11021'
+    max_capacity 5
+    active true
+  end 
 end

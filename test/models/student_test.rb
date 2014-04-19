@@ -93,6 +93,10 @@ class StudentTest < ActiveSupport::TestCase
 
   	end
 
+  	should "correctly assess if a student is destroyable" do
+      deny @eric.is_destroyable?
+    end
+
   end 
 
 end

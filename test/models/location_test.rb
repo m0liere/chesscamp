@@ -27,7 +27,25 @@ class LocationTest < ActiveSupport::TestCase
 
   #test
   should validate_numericality_of(:max_capacity)
-  should validate_numericality_of(:latitude)
-  should validate_numericality_of(:longitude)
+
+  context "create some locations" do
+    setup do 
+      create_locs
+    end 
+
+    teardown do
+      delete_locs
+    end
+
+    should "rank" do
+      assert_in_delta(41.4413644, @home.latitude, 0.001)
+      assert_in_delta(40.4435522, @fairfax.latitude, 0.001)
+      assert_in_delta(43.0961489, @skid.latitude, 0.001)
+      assert_in_delta(-73.73126239999999, @home.longitude, 0.001)
+      assert_in_delta(-73.7817705, @skid.longitude, 0.001)
+      assert_in_delta(-79.9559938, @fairfax.longitude, 0.001)
+    end 
+
+  end 
 
 end

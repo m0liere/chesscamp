@@ -1,6 +1,6 @@
 class Family < ActiveRecord::Base
 	#relationship
-	has_many(:students)
+	has_many :students
 	has_many :registrations, through: :students
 
 	#validations

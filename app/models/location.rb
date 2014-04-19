@@ -13,8 +13,6 @@ class Location < ActiveRecord::Base
 	validates_presence_of(:max_capacity)
 
 	#numericality validations
-	validates_numericality_of(:latitude)
-	validates_numericality_of(:longitude)
 	validates_numericality_of(:max_capacity)
 	validates :name, uniqueness: {case_sensitive: false}
 
@@ -33,7 +31,7 @@ class Location < ActiveRecord::Base
 
 	#geocoder
 	def find_loc_coordinates
-    	coord = Geocoder.coordinates("#{name}, #{street_1}, #{state}, #{zip}")
+    	coord = Geocoder.coordinates("#{name}, #{street_1}, #{street_2}, #{state}, #{zip}")
     	if coord
       		self.latitude = coord[0]
       		self.longitude = coord[1]
