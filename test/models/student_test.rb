@@ -14,6 +14,8 @@ class StudentTest < ActiveSupport::TestCase
   should validate_presence_of(:first_name)
   should validate_presence_of(:last_name)
 
+  should validate_numericality_of(:rating).only_integer()
+
   #rating in correct range
   should allow_value(0).for(:rating)
   should allow_value(3000).for(:rating)
@@ -23,7 +25,6 @@ class StudentTest < ActiveSupport::TestCase
   should_not allow_value(-1).for(:rating)
   should_not allow_value(50).for(:rating)
   should_not allow_value(5000).for(:rating)
-  should_not allow_value(nil).for(:rating)
   should_not allow_value('rank').for(:rating)
   should_not allow_value(5.765).for(:rating)
 
@@ -85,12 +86,13 @@ class StudentTest < ActiveSupport::TestCase
   	should "not allow student to be created if not part of an active family" do
   		@pirrip = FactoryGirl.create(:family, family_name: 'Pirrip', active: false)
   		@pip = FactoryGirl.build(:student, family: @pirrip, first_name: 'Philip', last_name: 'Pirrip')
+  		#assert_equal ["student must belong to an active family in the system"], @pip.errors[:base]
   		deny @pip.valid?
-  		@pirrip.destroy
+  		@pirrip.delete
   	end 
 
   	should "set unrated players to 0 before saving to database" do
-
+  		assert_equal 0, @kenny.rating
   	end
 
   	should "correctly assess if a student is destroyable" do

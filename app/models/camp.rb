@@ -1,10 +1,19 @@
 class Camp < ActiveRecord::Base
+  #callbacks
+  before_save :termination1, :if => :active_changed?
+  before_destroy :termination2
+
+  before_destroy :no_students_registered_destroy
+  before_save :no_students_registered_invalid, :if => :active_changed?
+
+
   # relationships
   belongs_to :curriculum
   belongs_to :location
   has_many :camp_instructors
   has_many :instructors, through: :camp_instructors
   has_many :registrations
+  has_many :students, through: :registrations
 
   # validations
   validates_presence_of :curriculum_id, :time_slot, :start_date
@@ -15,6 +24,8 @@ class Camp < ActiveRecord::Base
   validates_numericality_of :max_students, only_integer: true, greater_than: 0, allow_blank: true
   validate :curriculum_is_active_in_the_system
   validate :camp_is_not_a_duplicate, on: :create
+  validate :active_loc, on: :create
+  validate :max_students_valid_for_loc
 
   # scopes
   scope :alphabetical, -> { joins(:curriculum).order('name') }
@@ -58,4 +69,63 @@ class Camp < ActiveRecord::Base
   end
 
 
+  def termination1 
+    if (self.active = false)
+      cis = CampInstructor.where('camp_id = ?', self.id)
+      cis.each do |i|
+        i.destroy
+      end
+    end
+  end
+
+  def termination2 
+    cis = CampInstructor.where('camp_id = ?', self.id)
+    cis.each do |i|
+      i.destroy
+    end
+  end
+
+  #function to check camp is using an active location in the system
+  def active_loc
+    active_locs = Location.active.map{|i| i.id}
+    unless active_locs.include?(self.location_id)
+      errors.add(:camp, "camp must be associated with an active location in the system")
+    end
+  end
+
+  #making sure students and camp dont exceed locations max capacity
+  def max_students_valid_for_loc
+    if(self.max_students != nil)
+      unless self.location.max_capacity < self.max_students
+        return true
+      end
+      return false
+    end
+  end
+
+  #two fucntions to make sure camps can only be deleted OR 
+  #made invalid if there are no students registered for the given camp
+  def no_students_registered_destroy
+    registered_for_camp = Registration.where('camp_id = ?', self.id)
+    if registered_for_camp.size == 0
+      return true
+    end
+    return false
+  end
+
+  def no_students_registered_invalid
+      registered_for_camp = Registration.where('camp_id = ?', self.id)
+      if registered_for_camp.size != 0
+        self.active = true
+        self.save!
+      end
+  end
+
+  def no_duplicates
+    Camp.all.each do |x|
+      if (self.start_date == x.start_date) && (self.time_slot == x.time_slot) && (self.location == x.location) && (self.id != x.id)
+          errors.add(:camp, "camp cannot have same start date, time slot, and location as another in the system")
+      end
+    end
+  end
 end

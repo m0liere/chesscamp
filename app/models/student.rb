@@ -13,7 +13,7 @@ class Student < ActiveRecord::Base
 
 	#numerical vaidations
 	ratings_array = [0] + (100..3000).to_a
-	validates :rating, numericality: {only_integer: true}, inclusion: {in: ratings_array}, presence: true
+	validates :rating, numericality: {only_integer: true}, inclusion: {in: ratings_array}, allow_nil: true
 
 	validates_date :date_of_birth
 	#validates_numericality_of(:family_id)

@@ -26,12 +26,18 @@ class Instructor < ActiveRecord::Base
   # instance methods
   before_save :reformat_phone
 
+  before_destroy :is_destroyable?
+
   def name
     last_name + ", " + first_name
   end
   
   def proper_name
     first_name + " " + last_name
+  end
+
+  def is_destroyable?
+    false
   end
 
   private

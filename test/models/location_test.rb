@@ -29,12 +29,17 @@ class LocationTest < ActiveSupport::TestCase
   should validate_numericality_of(:max_capacity)
 
   context "create some locations" do
-    setup do 
+    setup do
+      create_curriculums
       create_locs
+      create_camps
     end 
 
     teardown do
+      delete_curriculums
       delete_locs
+      delete_camps
+
     end
 
     should "rank" do
@@ -44,7 +49,15 @@ class LocationTest < ActiveSupport::TestCase
       assert_in_delta(-73.73126239999999, @home.longitude, 0.001)
       assert_in_delta(-73.7817705, @skid.longitude, 0.001)
       assert_in_delta(-79.9559938, @fairfax.longitude, 0.001)
+      @bad_loc = FactoryGirl.create(:location, street_1: 'dksjhfadslhflda', zip: '99999', name: 'jankalank')
+      @bad_loc.destroy
+      assert_equal ["Error with geocoding"], @bad_loc.errors[:base]
     end 
+
+    should "not allow location that has been used to be deleted" do
+      deny @home.destroy
+
+    end
 
   end 
 

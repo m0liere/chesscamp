@@ -5,6 +5,8 @@ class CampTest < ActiveSupport::TestCase
   should belong_to(:curriculum)
   should have_many(:camp_instructors)
   should have_many(:instructors).through(:camp_instructors)
+  should belong_to(:location)
+  should have_many(:students).through(:registrations)
 
   # test validations
   should validate_presence_of(:curriculum_id)
@@ -49,11 +51,13 @@ class CampTest < ActiveSupport::TestCase
   context "Creating a camp context" do
     setup do 
       create_curriculums
+      create_locs
       create_camps
     end
     
     teardown do
       delete_curriculums
+      delete_locs
       delete_camps
     end
 
@@ -63,7 +67,7 @@ class CampTest < ActiveSupport::TestCase
     end
 
     should "verify that the camp's curriculum is active in the system" do
-      bad_camp = FactoryGirl.build(:camp, curriculum: @smithmorra, start_date: Date.new(2014,8,1), end_date: Date.new(2014,8,5))
+      bad_camp = FactoryGirl.build(:camp, location: @home, curriculum: @smithmorra, start_date: Date.new(2014,8,1), end_date: Date.new(2014,8,5))
       deny bad_camp.valid?
     end 
 
@@ -103,7 +107,7 @@ class CampTest < ActiveSupport::TestCase
     end
 
     should "shows that a duplicate camp cannot be created" do
-      @bad_camp = FactoryGirl.build(:camp, curriculum: @tactics, start_date: Date.new(2014,7,21), end_date: Date.new(2014,7,25), time_slot: 'am')
+      @bad_camp = FactoryGirl.build(:camp, location: @skid,curriculum: @tactics, start_date: Date.new(2014,7,21), end_date: Date.new(2014,7,25), time_slot: 'am')
       deny @bad_camp.valid?
     end
 
@@ -119,9 +123,9 @@ class CampTest < ActiveSupport::TestCase
     end
 
     should "check to make sure the end date is on or after the start date" do
-      @bad_camp = FactoryGirl.build(:camp, curriculum: @endgames, start_date: 9.days.from_now.to_date, end_date: 5.days.from_now.to_date)
+      @bad_camp = FactoryGirl.build(:camp, location: @fairfax, curriculum: @endgames, start_date: 9.days.from_now.to_date, end_date: 5.days.from_now.to_date)
       deny @bad_camp.valid?
-      @okay_camp = FactoryGirl.build(:camp, curriculum: @endgames, start_date: 9.days.from_now.to_date, end_date: 9.days.from_now.to_date)
+      @okay_camp = FactoryGirl.build(:camp, location: @skid, curriculum: @endgames, start_date: 9.days.from_now.to_date, end_date: 9.days.from_now.to_date)
       assert @okay_camp.valid?
     end
 

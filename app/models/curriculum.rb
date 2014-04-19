@@ -15,6 +15,14 @@ class Curriculum < ActiveRecord::Base
   scope :inactive, -> { where(active: false) }
   scope :for_rating, ->(rating) { where("min_rating <= ? and max_rating >= ?", rating, rating) }
 
+  #callback
+  before_destroy :is_destroyable?
+
+
+  #function to be used in callback to ensure curriculum cannot be deleted 
+  def is_destroyable?
+    false
+  end
 
   private
   def max_rating_greater_than_min_rating
@@ -26,6 +34,7 @@ class Curriculum < ActiveRecord::Base
     end
     return true
   end
+
 
 
 end

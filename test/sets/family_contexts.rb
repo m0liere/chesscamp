@@ -11,10 +11,10 @@ module Contexts
   	end
 
   	def delete_families 
-  		@cartman.destroy
-  		@marsh.destroy
-  		@brov.destroy
-  		@mc.destroy
+  		@cartman.delete
+  		@marsh.delete
+  		@brov.delete
+  		@mc.delete
   	end
   end
 end

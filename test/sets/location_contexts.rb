@@ -11,9 +11,9 @@ module Contexts
     end
     
     def delete_locs
-    	@home.destroy
-    	@fairfax.destroy
-    	@skid.destroy
+    	@home.delete
+    	@fairfax.delete
+    	@skid.delete
     end
   end
 end

@@ -1,11 +1,11 @@
 module Contexts
   module CampContexts
     def create_camps
-      # assumes create_curriculums prior
-      @camp1 = FactoryGirl.create(:camp, curriculum: @tactics)    
-      @camp2 = FactoryGirl.create(:camp, curriculum: @tactics, start_date: Date.new(2014,7,21), end_date: Date.new(2014,7,25))
-      @camp3 = FactoryGirl.create(:camp, curriculum: @tactics, time_slot: "pm", active: false)
-      @camp4 = FactoryGirl.create(:camp, curriculum: @endgames, start_date: Date.new(2014,7,21), end_date: Date.new(2014,7,26), time_slot: "pm")
+      # assumes create_curriculums prior and create_locs
+      @camp1 = FactoryGirl.create(:camp, curriculum: @tactics, location: @home)    
+      @camp2 = FactoryGirl.create(:camp, curriculum: @tactics, location: @fairfax, start_date: Date.new(2014,7,21), end_date: Date.new(2014,7,25))
+      @camp3 = FactoryGirl.create(:camp, curriculum: @tactics, location: @skid, time_slot: "pm", active: false)
+      @camp4 = FactoryGirl.create(:camp, curriculum: @endgames, location: @home, start_date: Date.new(2014,7,21), end_date: Date.new(2014,7,26), time_slot: "pm")
     end
 
     def delete_camps

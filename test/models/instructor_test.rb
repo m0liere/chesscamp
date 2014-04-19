@@ -81,6 +81,7 @@ class InstructorTest < ActiveSupport::TestCase
       delete_instructors
       create_curriculums
       create_instructors
+      create_locs
       create_camps
       create_camp_instructors
       assert_equal ["Alex", "Mark"], Instructor.for_camp(@camp1).map(&:first_name).sort
@@ -89,7 +90,11 @@ class InstructorTest < ActiveSupport::TestCase
       delete_curriculums
       delete_instructors
       delete_camps
+      delete_locs
     end
 
+    should "correctly assess whether an instructor can be deleted" do
+      deny @mark.destroy
+    end
   end
 end
