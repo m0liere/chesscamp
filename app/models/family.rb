@@ -24,4 +24,5 @@ class Family < ActiveRecord::Base
 	def is_destroyable?
 		false
 	end
+
 end

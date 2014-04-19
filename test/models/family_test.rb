@@ -37,4 +37,36 @@ class FamilyTest < ActiveSupport::TestCase
   should_not allow_value("412/268/3259").for(:phone)
   should_not allow_value("412-2683-259").for(:phone)
 
+
+  context "create some families from south park" do
+  	setup do
+  		create_families
+  		@pirrip = FactoryGirl.create(:family, family_name: 'Pirrip', active: false)
+  	end
+
+  	teardown do
+  		delete_families
+  		@pirrip.destroy
+  	end 
+
+  	should "correctly assess if a family is destroyable" do
+      deny @cartman.is_destroyable?
+    end
+
+  	should "show there are active 4 families in the system" do
+		assert_equal 4, Family.active.size
+		assert_equal ['Brovslovski', 'Cartman', 'Marsh', 'Mccormick'], Family.active.map{|i| i.family_name}.sort
+	end
+
+	should "show there is 1 inactive family in the system" do
+		assert_equal 1, Family.inactive.size
+		assert_equal ['Pirrip'], Family.inactive.map{|i| i.family_name}
+	end
+
+	should "show all families in alphabetical order" do 
+		assert_equal ['Brovslovski', 'Cartman', 'Marsh', 'Mccormick', 'Pirrip'], Family.alphabetical.map { |i| i.family_name  }
+	end
+
+  end
+
 end

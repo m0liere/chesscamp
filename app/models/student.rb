@@ -60,6 +60,7 @@ class Student < ActiveRecord::Base
   	end
 
 	def age
+		#try to account for leap years later
 		(Date.today- date_of_birth).to_i/365
 	end
 
