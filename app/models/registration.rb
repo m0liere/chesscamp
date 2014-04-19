@@ -19,6 +19,18 @@ class Registration < ActiveRecord::Base
 	scope :deposit_only, -> {where('payment_status = ?', 'deposit')}
 	scope :paid, -> {where('payment_status = ?', 'full')} 
 
+	#function to test that the respective student it active in the system
+	def active_student
+		unless Student.active.include?(self.student)
+			errors.add(:registration, "Registration must me associated with an active student")
+		end
+	end
+	#function to test that the respective camp it active in the system
+	def active_camp
+		unless Camp.active.include?(self.camp)
+			errors.add(:registration, "Registration must me associated with an active camp")
+		end
+	end
 
 	#function making sure students camp selection is good for their rating
 	def can_register_for_camp?

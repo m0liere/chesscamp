@@ -23,6 +23,7 @@ class CampInstructorTest < ActiveSupport::TestCase
     setup do 
       create_curriculums
       create_instructors
+      create_locs
       create_camps
       create_camp_instructors
     end
@@ -30,6 +31,7 @@ class CampInstructorTest < ActiveSupport::TestCase
     teardown do
       delete_curriculums
       delete_instructors
+      delete_locs
       delete_camps
       delete_camp_instructors
     end
