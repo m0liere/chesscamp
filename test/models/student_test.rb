@@ -67,8 +67,8 @@ class StudentTest < ActiveSupport::TestCase
   	end	
 
   	should "show that there are 2 students with ratings at or above 1000" do
-  		assert_equal 2, Student.at_or_above_rating(1000).size
-  		assert_equal ['Kyle', 'Stan'], Student.at_or_above_rating(1000).map{|i| i.first_name}.sort
+  		assert_equal 2, Student.at_or_above_rating(400).size
+  		assert_equal ['Kyle', 'Stan'], Student.at_or_above_rating(400).map{|i| i.first_name}.sort
   	end
 
   	should "show correct name for given student" do

@@ -13,6 +13,8 @@ class Registration < ActiveRecord::Base
 	validates :points_earned, numericality:{greater_than_or_equal_to: 0, only_integer: true}
 
 	validate :can_register_for_camp?
+	validate :active_student
+	validate :active_camp
 
 	#scopes
 	#---------------------------------------------
@@ -34,7 +36,9 @@ class Registration < ActiveRecord::Base
 
 	#function making sure students camp selection is good for their rating
 	def can_register_for_camp?
-		return self.camp.camp_ratings_range.include?(self.student.rating)
+		if self.camp != nil 
+			return self.camp.camp_ratings_range.include?(self.student.rating)
+		end
 	end
 
 

@@ -65,4 +65,11 @@ FactoryGirl.define do
     role 'instructor'
     active true
   end
+
+  factory :registration do
+    association :student
+    association :camp
+    payment_status 'full'
+    points_earned 420 
+  end
 end
