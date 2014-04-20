@@ -17,11 +17,24 @@ class Curriculum < ActiveRecord::Base
 
   #callback
   before_destroy :is_destroyable?
+  before_save :inactive_curric_test
+
 
 
   #function to be used in callback to ensure curriculum cannot be deleted 
   def is_destroyable?
     false
+  end
+
+
+  def inactive_curric_test 
+    Camp.upcoming.where('curriculum_id = ?', self.id).map { |i| i.id  }.each do |x|
+      if(Registration.where('camp_id = ?', x).size > 0)
+        self.active = true
+        self.save!
+        return
+      end
+    end
   end
 
   private

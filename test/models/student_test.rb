@@ -99,6 +99,7 @@ class StudentTest < ActiveSupport::TestCase
       deny @eric.is_destroyable?
     end
 
+
   end 
 
 end

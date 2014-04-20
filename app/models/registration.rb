@@ -37,7 +37,9 @@ class Registration < ActiveRecord::Base
 	#function making sure students camp selection is good for their rating
 	def can_register_for_camp?
 		if self.camp != nil 
-			return self.camp.camp_ratings_range.include?(self.student.rating)
+			unless self.camp.camp_ratings_range.include?(self.student.rating)
+				errors.add(:registration, "students rating does not match the camp")
+			end
 		end
 	end
 

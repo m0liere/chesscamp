@@ -109,11 +109,11 @@ class Camp < ActiveRecord::Base
   #two fucntions to make sure camps can only be deleted OR 
   #made invalid if there are no students registered for the given camp
   def no_students_registered_destroy
-    registered_for_camp = Registration.where('camp_id = ?', self.id)
+    registered_for_camp = Registration.where('camp_id = ?', self.id).to_a.map { |i| i.id  }
     if registered_for_camp.size == 0
       return true
     end
-    return false
+      return false
   end
 
   def no_students_registered_invalid

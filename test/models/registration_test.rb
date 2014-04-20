@@ -61,6 +61,11 @@ class RegistrationTest < ActiveSupport::TestCase
   		deny @bad_reg.valid?
   	end
 
+  	should "make sure student is registering for a camp their rating qualifies them for" do
+  		@bad_reg = FactoryGirl.build(:registration, student: @eric, camp: @camp1)
+  		deny @bad_reg.valid?
+  	end
+
   end 
 
 

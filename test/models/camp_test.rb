@@ -54,6 +54,9 @@ class CampTest < ActiveSupport::TestCase
       create_locs
       create_camps
       create_instructors
+      create_families
+      create_students
+      create_registrations
     end
     
     teardown do
@@ -61,6 +64,9 @@ class CampTest < ActiveSupport::TestCase
       delete_locs
       delete_camps
       delete_instructors
+      delete_families
+      delete_students
+      delete_registrations
     end
 
     should "verify there is a camp name method" do
@@ -162,6 +168,16 @@ class CampTest < ActiveSupport::TestCase
     should "not allow camp with same start_date, time_slot, location" do
       @notgood = FactoryGirl.build(:camp, curriculum: @endgames, location: @home, start_date: Date.new(2014,7,21), end_date: Date.new(2014,7,26), time_slot: "pm")
       deny @notgood.valid?
+    end
+
+    should "not allow camps with registered students to be deleted" do
+      deny @camp1.no_students_registered_destroy
+    end 
+
+    should "not allow camps with registered students to be inactive" do
+      @camp1.update_attribute(:active, false)
+      @camp1.save
+      assert_equal true, @camp1.active
     end
   end
 end

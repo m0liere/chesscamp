@@ -1,8 +1,9 @@
 class Student < ActiveRecord::Base
 	#relationships
 	#-------------------------------------------------------------------------------
-	has_many(:registrations)
-	belongs_to(:family)
+	has_many :registrations
+	belongs_to :family
+	has_many :camps, through: :registrations
 
 	#validations	
 	#-------------------------------------------------------------------------------

@@ -43,11 +43,21 @@ class CurriculumTest < ActiveSupport::TestCase
     # create the objects I want with factories
     setup do 
       create_curriculums
+      create_locs
+      create_camps
+      create_families
+      create_students
+      create_registrations
     end
     
     # and provide a teardown method as well
     teardown do
       delete_curriculums
+      delete_locs
+      delete_camps
+      delete_families
+      delete_students
+      delete_registrations
     end
 
     # test the scope 'alphabetical'
@@ -76,5 +86,12 @@ class CurriculumTest < ActiveSupport::TestCase
     should "correctly assess if a curriculum is destroyable" do
       deny @tactics.is_destroyable?
     end
+
+    #this is the last function to be tested for curriculums, but im getting a stack level too deep error
+    should "fdsahfladsj" do
+      
+    end
+
+
   end
 end
