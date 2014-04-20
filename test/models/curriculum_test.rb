@@ -89,7 +89,9 @@ class CurriculumTest < ActiveSupport::TestCase
 
     #this is the last function to be tested for curriculums, but im getting a stack level too deep error
     should "fdsahfladsj" do
-      
+      @tactics.update_attribute(:active, false)
+      @tactics.save
+      assert_equal true, @tactics.active
     end
 
 

@@ -31,7 +31,6 @@ class Curriculum < ActiveRecord::Base
     Camp.upcoming.where('curriculum_id = ?', self.id).map { |i| i.id  }.each do |x|
       if(Registration.where('camp_id = ?', x).size > 0)
         self.active = true
-        self.save!
         return
       end
     end
