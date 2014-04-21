@@ -87,8 +87,7 @@ class CurriculumTest < ActiveSupport::TestCase
       deny @tactics.is_destroyable?
     end
 
-    #this is the last function to be tested for curriculums, but im getting a stack level too deep error
-    should "fdsahfladsj" do
+    should "make sure that curriculums associated with camps that have registrations cannot be made inactive" do
       @tactics.update_attribute(:active, false)
       @tactics.save
       assert_equal true, @tactics.active

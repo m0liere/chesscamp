@@ -42,7 +42,7 @@ class LocationTest < ActiveSupport::TestCase
 
     end
 
-    should "rank" do
+    should "get latitude and longitude" do
       assert_in_delta(41.4413644, @home.latitude, 0.001)
       assert_in_delta(40.4435522, @fairfax.latitude, 0.001)
       assert_in_delta(43.0961489, @skid.latitude, 0.001)

@@ -5,3 +5,6 @@ This is starter code for the course project in 67-272: Application Design and De
 To set this up, clone this repository, run the `bundle install` command to ensure you have all the needed gems and then create the database with `rake db:migrate`.  If you want to populate the system with fictitious, but somewhat realistic data (similar to the data given in the spreadsheets in phase 1), you can run the `rake db:populate` command.  There is also an extended set of contexts that can be imported and used instead.  Undoubtably students will want to extend the contexts further for their own unit testing.
 
 Instructions for what needs to be done in this phase of the project can be found in the phase 4 write-up found on the [67-272 course site](http://cmu-is-272.org/projects/4).
+
+
+**There is one issue that I think can come up. So the ERD and data dictionary say the photo field is called 'picture' and that's how I had it originially. Once I implemented the photo uploader from the lab (following those directions), I got errors and had to change the migration so the field would be called 'photo'. The TA's on piazza didn't say anything about people calling it the 'photo' field, so I left the new migration but i'm not sure if that will conflict with any of prof H's tests.**
